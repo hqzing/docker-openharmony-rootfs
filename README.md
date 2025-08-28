@@ -25,6 +25,7 @@ docker build -t docker-openharmony-rootfs:latest .
 ## Usage
 Run the container with default command
 ```sh
+docker rm -f ohos
 docker run -itd --name=ohos ghcr.io/hqzing/docker-openharmony-rootfs:latest
 docker exec -it ohos sh
 ```
