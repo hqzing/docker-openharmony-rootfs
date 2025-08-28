@@ -31,3 +31,20 @@ RUN mkdir ramdisk && \
 FROM scratch
 COPY --from=builder /tmp/ramdisk /
 CMD ["/bin/sh"]
+
+# 创建基本的passwd文件
+RUN echo "root:x:0:0:root:/root:/bin/sh" > /etc/passwd && \
+    echo "nobody:x:65534:65534:nobody:/nonexistent:/bin/sh" >> /etc/passwd && \
+    echo "daemon:x:1:1:daemon:/usr/sbin:/bin/sh" >> /etc/passwd
+
+# 创建group文件
+RUN echo "root:x:0:" > /etc/group && \
+    echo "nobody:x:65534:" >> /etc/group && \
+    echo "daemon:x:1:" >> /etc/group
+
+# 创建必要的目录
+RUN mkdir -p /root && chmod 700 /root
+
+# 设置工作目录和用户
+WORKDIR /app
+USER root
